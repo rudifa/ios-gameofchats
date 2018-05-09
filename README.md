@@ -12,6 +12,21 @@ XCode 9 is mostly helpful in making changes from swift 3 to swift 4.
 
 ### Ep 2 - Installing SDK using Cocoapods and Saving Users into Database
 
+Create the Firepase project:
 - in [Firebase console](https://console.firebase.google.com/), **Add project** *my_gameofchats*
-- get bundle ID *rudifa.my-gameofchats* from the project **Target - Identity - Bundle Identifier** 
+- get bundle ID *rudifa.my-gameofchats* from the project **Target - Identity - Bundle Identifier**
 - paste it into the dialog **Add Firebase to your iOS app - iOS bundle ID**
+- **Register the App**
+- download the *GoogleService-Info.plist*
+- copy it into the project
+
+Install Pods for Firebase SDK into the project:
+- in project directory, open terminal and run ```pod init```
+- add to Podfile
+```
+pod 'Firebase/Database'
+pod 'Firebase/Auth'
+pod 'Firebase/Storage'
+```
+- run ```pod install```
+- close XCode, then open ```my_gameofchats.xcworkspace``` fron now on
