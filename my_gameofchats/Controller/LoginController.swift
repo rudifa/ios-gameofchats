@@ -14,6 +14,8 @@ class LoginController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
         return view
     }()
 
@@ -24,9 +26,8 @@ class LoginController: UIViewController {
         
         //UIApplication.shared.statusBarView?.backgroundColor = UIColor.red // just testing
         
-        constrainInputsContainerView()
-        
         view.addSubview(inputsContainerView)
+        constrainInputsContainerView()
     }
     
     func constrainInputsContainerView() {
@@ -34,7 +35,6 @@ class LoginController: UIViewController {
         inputsContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         inputsContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier:1.0, constant: -24).isActive = true
         inputsContainerView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
-
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
