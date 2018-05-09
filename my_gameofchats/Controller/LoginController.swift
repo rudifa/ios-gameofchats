@@ -14,6 +14,12 @@ class LoginController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151, alpha: 1)
+        
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.red // just testing
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
@@ -22,3 +28,10 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
     }
 }
+
+extension UIApplication {
+    var statusBarView: UIView? {
+        return value(forKey: "statusBar") as? UIView
+    }
+}
+
