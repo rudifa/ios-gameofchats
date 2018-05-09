@@ -14,6 +14,7 @@
 		9D36BDB420A32A40008BC14D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D36BDB220A32A40008BC14D /* LaunchScreen.storyboard */; };
 		9D36BDBF20A32A40008BC14D /* my_gameofchatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDBE20A32A40008BC14D /* my_gameofchatsTests.swift */; };
 		9D36BDCA20A32A40008BC14D /* my_gameofchatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDC920A32A40008BC14D /* my_gameofchatsUITests.swift */; };
+		9D36BDDA20A330E8008BC14D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDD920A330E8008BC14D /* LoginController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		9D36BDC520A32A40008BC14D /* my_gameofchatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = my_gameofchatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D36BDC920A32A40008BC14D /* my_gameofchatsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = my_gameofchatsUITests.swift; sourceTree = "<group>"; };
 		9D36BDCB20A32A40008BC14D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D36BDD920A330E8008BC14D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +99,8 @@
 		9D36BDA820A32A3B008BC14D /* my_gameofchats */ = {
 			isa = PBXGroup;
 			children = (
+				9D36BDD820A3304B008BC14D /* Controller */,
 				9D36BDA920A32A3B008BC14D /* AppDelegate.swift */,
-				9D36BDAB20A32A3B008BC14D /* ViewController.swift */,
 				9D36BDAD20A32A3B008BC14D /* Main.storyboard */,
 				9D36BDB020A32A40008BC14D /* Assets.xcassets */,
 				9D36BDB220A32A40008BC14D /* LaunchScreen.storyboard */,
@@ -123,6 +125,15 @@
 				9D36BDCB20A32A40008BC14D /* Info.plist */,
 			);
 			path = my_gameofchatsUITests;
+			sourceTree = "<group>";
+		};
+		9D36BDD820A3304B008BC14D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9D36BDD920A330E8008BC14D /* LoginController.swift */,
+				9D36BDAB20A32A3B008BC14D /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D36BDAC20A32A3B008BC14D /* ViewController.swift in Sources */,
+				9D36BDDA20A330E8008BC14D /* LoginController.swift in Sources */,
 				9D36BDAA20A32A3B008BC14D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
