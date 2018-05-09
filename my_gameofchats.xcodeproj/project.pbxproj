@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9D0BBF6320A37B4100E74597 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9D0BBF6220A37B4100E74597 /* README.md */; };
+		9D0BBF6520A38F7A00E74597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D0BBF6420A38F7A00E74597 /* GoogleService-Info.plist */; };
 		9D36BDAA20A32A3B008BC14D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDA920A32A3B008BC14D /* AppDelegate.swift */; };
 		9D36BDAC20A32A3B008BC14D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDAB20A32A3B008BC14D /* ViewController.swift */; };
 		9D36BDAF20A32A3B008BC14D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D36BDAD20A32A3B008BC14D /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		9D0BBF6220A37B4100E74597 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9D0BBF6420A38F7A00E74597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D36BDA620A32A3B008BC14D /* my_gameofchats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = my_gameofchats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D36BDA920A32A3B008BC14D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D36BDAB20A32A3B008BC14D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				9D36BDB020A32A40008BC14D /* Assets.xcassets */,
 				9D36BDB220A32A40008BC14D /* LaunchScreen.storyboard */,
 				9D36BDB520A32A40008BC14D /* Info.plist */,
+				9D0BBF6420A38F7A00E74597 /* GoogleService-Info.plist */,
 			);
 			path = my_gameofchats;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 			files = (
 				9D36BDB420A32A40008BC14D /* LaunchScreen.storyboard in Resources */,
 				9D36BDB120A32A40008BC14D /* Assets.xcassets in Resources */,
+				9D0BBF6520A38F7A00E74597 /* GoogleService-Info.plist in Resources */,
 				9D0BBF6320A37B4100E74597 /* README.md in Resources */,
 				9D36BDAF20A32A3B008BC14D /* Main.storyboard in Resources */,
 			);
