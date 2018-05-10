@@ -38,9 +38,10 @@ class LoginController: UIViewController {
     @objc func handleRegister() {
         print("Registration ...")
         guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
-            print("Registration form is incomplete.")
+            print("*** Registration form is incomplete.")
             return
         }
+        
         // register user with the Firebase project admin
         Auth.auth().createUser(withEmail: email, password: password) {
             (user: User?, error) in
@@ -49,19 +50,27 @@ class LoginController: UIViewController {
                 return
             }
             print("User registered successfully.")
-        }
-        // add user to the list of users in our database
-        let ref = Database.database().reference(fromURL: databaseUrl)
-        let usersRef = ref.child("users")
-        let values = ["name": name, "email": email]
-        usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-            if err != nil {
-                print(err ?? "")
+            
+            // add user to the list of users in our database
+            
+            guard let uid = user?.uid else {
+                print("*** Failed to get user uid.")
                 return
             }
-            print("User added to users.")
-        })
-   }
+            
+            let ref = Database.database().reference(fromURL: self.databaseUrl)
+            let userRef = ref.child("users").child(uid)
+            let values = ["name": name, "email": email]
+            userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                if err != nil {
+                    print(err ?? "")
+                    return
+                }
+                print("User added to users.")
+            })
+        }
+
+  }
     
     let nameTextField: UITextField = {
         let tf = UITextField()
