@@ -67,6 +67,8 @@ class LoginController: UIViewController {
                     return
                 }
                 print("User added to users.")
+                
+                self.dismiss(animated: true, completion: nil)
             })
         }
     }
