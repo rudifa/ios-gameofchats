@@ -31,11 +31,36 @@ class LoginController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
         return button
     }()
     
-    @objc func handleRegister() {
+    @objc func handleLoginRegister() {
+        let selIndex = loginRegisterSegmentedControl.selectedSegmentIndex
+        if selIndex == 0 {
+            handleLogin()
+        } else {
+            handleRegister()
+        }
+    }
+    
+    func handleLogin() {
+        print("Login ...")
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            print("*** Login form is incomplete.")
+            return
+        }
+        Auth.auth().signIn(withEmail: email, password: password) {
+            (user, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func handleRegister() {
         print("Registration ...")
         guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
             print("*** Registration form is incomplete.")
