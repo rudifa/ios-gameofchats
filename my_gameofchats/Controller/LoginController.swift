@@ -115,6 +115,13 @@ class LoginController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
+    let loginRegisterSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Login", "Register"])
+        sc.tintColor = UIColor.white
+        sc.translatesAutoresizingMaskIntoConstraints = false
+        return sc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,8 +133,10 @@ class LoginController: UIViewController {
         view.addSubview(profileImageView)
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
+        view.addSubview(loginRegisterSegmentedControl)
         
         setupProfileImageView()
+        setupLoginRegisterSegmentedControl()
         setupInputsContainerView()
         setupLoginRegisterButton()
     }
@@ -135,9 +144,17 @@ class LoginController: UIViewController {
     func setupProfileImageView() {
         // x, y, width, height constraints
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -12).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -12).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+    }
+    
+    func setupLoginRegisterSegmentedControl() {
+        // x, y, width, height constraints
+        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -12).isActive = true
+        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
+        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     func setupInputsContainerView() {

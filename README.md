@@ -91,3 +91,7 @@ Before attempting to add data to the database, change **Database - RULES** to
 }
 ```
 otherwise permissions will be denied.
+
+Expand the ```func handleRegister``` to add the user data to ```database/users```
+
+### Ep3 - Logging in with Email and Password
