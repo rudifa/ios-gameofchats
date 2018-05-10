@@ -24,9 +24,56 @@ Install Pods for Firebase SDK into the project:
 - in project directory, open terminal and run ```pod init```
 - add to Podfile
 ```
-pod 'Firebase/Database'
-pod 'Firebase/Auth'
-pod 'Firebase/Storage'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
 ```
 - run ```pod install```
-- close XCode, then open ```my_gameofchats.xcworkspace``` fron now on
+- close XCode, then open ```my_gameofchats.xcworkspace``` from now on
+
+Add Firebase-related code to the project:
+- in ```AppDelegate```: ```import Firebase``` and configure it.
+
+Enable authentication:
+- in Firebase Console - **Authentication - SET UP SIGN-IN METHOD - Email/Password - Enable**
+
+Add registration code to the ```LoginController``` button:
+```
+let loginRegisterButton: UIButton = {
+    let button = UIButton(type: .system)
+    button.backgroundColor = UIColor(r: 100, g: 121, b: 181)
+    button.setTitle("Register", for: .normal)
+    button.setTitleColor(UIColor.white, for: .normal)
+    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+    button.translatesAutoresizingMaskIntoConstraints = false
+
+    button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+    return button
+}()
+
+@objc func handleRegister() {
+    print("Registration ...")
+    guard let email = emailTextField.text, let password = passwordTextField.text else {
+        print("Registration form is incomplete.")
+        return
+    }
+
+    Auth.auth().createUser(withEmail: email, password: password) {
+        (user: User?, error) in
+        if error != nil {
+            print(error!)
+            return
+        }
+        print("User registered successfully.")
+    }
+}
+```
+
+To test, register a user in the app
+```
+Fred
+Fred@g.com
+*******
+```
+
+User appears in the Firebase console **Authentication**
