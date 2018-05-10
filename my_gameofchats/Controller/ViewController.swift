@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
         
         // user is not logged in
         if Auth.auth().currentUser?.uid == nil {
-            handleLogout()
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
         }
     }
 
