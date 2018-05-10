@@ -77,3 +77,17 @@ Fred@g.com
 ```
 
 User appears in the Firebase console **Authentication**
+
+The app's database is [here](https://console.firebase.google.com/project/my-gameofchats/database/my-gameofchats/data) .
+
+Before attempting to add data to the database, change **Database - RULES** to
+```
+// These rules require authentication
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+```
+otherwise permissions will be denied.

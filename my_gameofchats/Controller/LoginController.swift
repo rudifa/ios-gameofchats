@@ -11,6 +11,9 @@ import Firebase
 
 class LoginController: UIViewController {
     
+    //let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"] // no good
+    let databaseUrl = "https://my-gameofchats.firebaseio.com"
+    
     let inputsContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -34,11 +37,11 @@ class LoginController: UIViewController {
     
     @objc func handleRegister() {
         print("Registration ...")
-        guard let email = emailTextField.text, let password = passwordTextField.text else {
+        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
             print("Registration form is incomplete.")
             return
         }
-        
+        // register user with the Firebase project admin
         Auth.auth().createUser(withEmail: email, password: password) {
             (user: User?, error) in
             if error != nil {
@@ -47,6 +50,17 @@ class LoginController: UIViewController {
             }
             print("User registered successfully.")
         }
+        // add user to the list of users in our database
+        let ref = Database.database().reference(fromURL: databaseUrl)
+        let usersRef = ref.child("users")
+        let values = ["name": name, "email": email]
+        usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if err != nil {
+                print(err ?? "")
+                return
+            }
+            print("User added to users.")
+        })
    }
     
     let nameTextField: UITextField = {
