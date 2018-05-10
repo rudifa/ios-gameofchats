@@ -69,8 +69,7 @@ class LoginController: UIViewController {
                 print("User added to users.")
             })
         }
-
-  }
+    }
     
     let nameTextField: UITextField = {
         let tf = UITextField()
@@ -116,12 +115,19 @@ class LoginController: UIViewController {
         return imageView
     }()
     
-    let loginRegisterSegmentedControl: UISegmentedControl = {
+    lazy var loginRegisterSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Login", "Register"])
         sc.tintColor = UIColor.white
+        sc.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
         sc.translatesAutoresizingMaskIntoConstraints = false
         return sc
     }()
+    
+    @objc func handleLoginRegisterChange() {
+        let index = loginRegisterSegmentedControl.selectedSegmentIndex
+        let title = loginRegisterSegmentedControl.titleForSegment(at: index)
+        loginRegisterButton.setTitle(title, for: .normal)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
