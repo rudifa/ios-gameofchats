@@ -95,3 +95,14 @@ otherwise permissions will be denied.
 Expand the ```func handleRegister``` to add the user data to ```database/users```
 
 ### Ep3 - Logging in with Email and Password
+
+Demonstrates more UI constraint manipulations in code
+. add a SegmentedControl
+. change the button text
+. change vertical sizes of views
+
+Handles Login vs. RegisterAndLogin
+
+### Ep4 - How to Fetch Users from Database
+
+Rename ViewController to MessageController (file and class)

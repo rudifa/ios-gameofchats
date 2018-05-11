@@ -11,7 +11,7 @@
 		9D0BBF6320A37B4100E74597 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9D0BBF6220A37B4100E74597 /* README.md */; };
 		9D0BBF6520A38F7A00E74597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D0BBF6420A38F7A00E74597 /* GoogleService-Info.plist */; };
 		9D36BDAA20A32A3B008BC14D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDA920A32A3B008BC14D /* AppDelegate.swift */; };
-		9D36BDAC20A32A3B008BC14D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDAB20A32A3B008BC14D /* ViewController.swift */; };
+		9D36BDAC20A32A3B008BC14D /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDAB20A32A3B008BC14D /* MessageController.swift */; };
 		9D36BDAF20A32A3B008BC14D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D36BDAD20A32A3B008BC14D /* Main.storyboard */; };
 		9D36BDB120A32A40008BC14D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D36BDB020A32A40008BC14D /* Assets.xcassets */; };
 		9D36BDB420A32A40008BC14D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D36BDB220A32A40008BC14D /* LaunchScreen.storyboard */; };
@@ -44,7 +44,7 @@
 		9D0BBF6420A38F7A00E74597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D36BDA620A32A3B008BC14D /* my_gameofchats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = my_gameofchats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D36BDA920A32A3B008BC14D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9D36BDAB20A32A3B008BC14D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9D36BDAB20A32A3B008BC14D /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
 		9D36BDAE20A32A3B008BC14D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D36BDB020A32A40008BC14D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D36BDB320A32A40008BC14D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				9D36BDD920A330E8008BC14D /* LoginController.swift */,
-				9D36BDAB20A32A3B008BC14D /* ViewController.swift */,
+				9D36BDAB20A32A3B008BC14D /* MessageController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D36BDAC20A32A3B008BC14D /* ViewController.swift in Sources */,
+				9D36BDAC20A32A3B008BC14D /* MessageController.swift in Sources */,
 				9D36BDDA20A330E8008BC14D /* LoginController.swift in Sources */,
 				9D36BDAA20A32A3B008BC14D /* AppDelegate.swift in Sources */,
 			);
@@ -525,7 +525,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchats/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchats";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -541,7 +544,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchats/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchats";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -557,7 +563,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchatsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchatsTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -574,7 +584,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchatsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchatsTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -590,7 +604,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchatsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchatsUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -606,7 +624,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7R356DGKL;
 				INFOPLIST_FILE = my_gameofchatsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "rudifa.my-gameofchatsUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
