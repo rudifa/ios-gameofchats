@@ -17,7 +17,15 @@ class MessageController: UITableViewController {
         // Not using the storyboard - create the accessories.
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
+
 //        checkIfUserIsLoggedIn()
+    }
+    
+    @objc func handleNewMessage() {
+        let newMessageController = NewMessageController()
+        let navController = UINavigationController(rootViewController: newMessageController)
+        present(navController, animated: true, completion: nil)
     }
     
     func checkIfUserIsLoggedIn() {
@@ -27,7 +35,7 @@ class MessageController: UITableViewController {
             // get user info
             let uid = Auth.auth().currentUser?.uid
             Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
+//                print(snapshot)
                 if let dict = snapshot.value as? [String: AnyObject] {
                     self.navigationItem.title = dict["name"] as? String
                 }

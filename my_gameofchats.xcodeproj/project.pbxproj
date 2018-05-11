@@ -18,6 +18,7 @@
 		9D36BDBF20A32A40008BC14D /* my_gameofchatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDBE20A32A40008BC14D /* my_gameofchatsTests.swift */; };
 		9D36BDCA20A32A40008BC14D /* my_gameofchatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDC920A32A40008BC14D /* my_gameofchatsUITests.swift */; };
 		9D36BDDA20A330E8008BC14D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36BDD920A330E8008BC14D /* LoginController.swift */; };
+		9DB3C37420A5F1D200EDC547 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB3C37320A5F1D200EDC547 /* NewMessageController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		9D36BDC920A32A40008BC14D /* my_gameofchatsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = my_gameofchatsUITests.swift; sourceTree = "<group>"; };
 		9D36BDCB20A32A40008BC14D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D36BDD920A330E8008BC14D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		9DB3C37320A5F1D200EDC547 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		DF37269B35F4F4D19B0BE76A /* Pods-my_gameofchats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-my_gameofchats.release.xcconfig"; path = "Pods/Target Support Files/Pods-my_gameofchats/Pods-my_gameofchats.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +164,7 @@
 			children = (
 				9D36BDD920A330E8008BC14D /* LoginController.swift */,
 				9D36BDAB20A32A3B008BC14D /* MessageController.swift */,
+				9DB3C37320A5F1D200EDC547 /* NewMessageController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB3C37420A5F1D200EDC547 /* NewMessageController.swift in Sources */,
 				9D36BDAC20A32A3B008BC14D /* MessageController.swift in Sources */,
 				9D36BDDA20A330E8008BC14D /* LoginController.swift in Sources */,
 				9D36BDAA20A32A3B008BC14D /* AppDelegate.swift in Sources */,
