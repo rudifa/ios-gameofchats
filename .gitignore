@@ -1,7 +1,4 @@
 .DS_Store
-xcuserdata
-*.xcuserstate
-*.xcbkptlist
-
-
-
+xcuserdata/*
+xcuserstate/*
+#*.xcbkptlist
