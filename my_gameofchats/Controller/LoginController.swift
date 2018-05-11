@@ -59,45 +59,6 @@ class LoginController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    func handleRegister() {
-        print("Registration ...")
-        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
-            print("*** Registration form is incomplete.")
-            return
-        }
-        
-        // register user with the Firebase project admin
-        Auth.auth().createUser(withEmail: email, password: password) {
-            (user: User?, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            print("User registered successfully.")
-            
-            // add user to the list of users in our database
-            
-            guard let uid = user?.uid else {
-                print("*** Failed to get user uid.")
-                return
-            }
-            
-            let ref = Database.database().reference(fromURL: self.databaseUrl)
-            let userRef = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                if err != nil {
-                    print(err ?? "")
-                    return
-                }
-                print("User added to users.")
-                
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
-    }
-    
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
