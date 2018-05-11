@@ -106,3 +106,39 @@ Handles Login vs. RegisterAndLogin
 ### Ep4 - How to Fetch Users from Database
 
 Rename ViewController to MessageController (file and class)
+
+Add class NewMessageController + UserData
+
+Fetch user data from database and display in a custom UserCell, in the NewMessageController's tableView
+```
+Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in ...
+```
+Problems (workarounds found)
+
+```
+if let dict = snapshot.value as? [String: AnyObject] {
+    let user = UserData()
+    // user.setValuesForKeys(dict)
+    // ^^^ this class is not key value coding-compliant for the key name.'
+    ...
+```
+```
+//  dispatch_async(dispatch_get_main_queue(), {
+//      self.tableView.reloadData()
+//  })
+//  ^^^ Brian says this should be dispatched ...
+// but I could not find the swift 4 equivalent
+
+```
+
+### Ep5 - How to Upload Images to Firebase Storage
+
+Add tap gesture recognizer to the profile image view
+
+```
+lazy var profileImageView: UIImageView = { ...
+
+  imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+  imageView.isUserInteractionEnabled = true
+
+```
