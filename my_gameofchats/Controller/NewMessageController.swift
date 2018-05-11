@@ -7,15 +7,44 @@
 //
 
 import UIKit
+import Firebase
 
 class NewMessageController: UITableViewController {
 
     let cellId = "cellId"
     
+    var users = [UserData]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        
+        fetchUser()
+    }
+    
+    func fetchUser() {
+        Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let user = UserData()
+                // user.setValuesForKeys(dict)
+                // ^^^ this class is not key value coding-compliant for the key name.'
+
+                user.name = dict["name"] as? String
+                user.email = dict["email"] as? String
+                self.users.append(user)
+                
+                self.tableView.reloadData()
+                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.tableView.reloadData()
+//                })
+//                  ^^^ Brian says this should be dispatched ... could not find the swift 4 equivalent
+            }
+        })
     }
     
     @objc func handleCancel() {
@@ -23,12 +52,24 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        cell.textLabel?.text = "hello"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         return cell
+    }
+}
+
+class UserCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
