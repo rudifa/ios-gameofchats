@@ -142,3 +142,35 @@ lazy var profileImageView: UIImageView = { ...
   imageView.isUserInteractionEnabled = true
 
 ```
+
+Can't make this to work
+```
+extension LoginController: UIImagePickerControllerDelegate {
+
+    @objc func handleSelectProfileImageView() {
+        let picker = UIImagePickerController()
+        picker.delegate = self as UIImagePickerControllerDelegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        present(picker, animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+        print("didFinishPickingMediaWithInfo", info)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("imagePickerControllerDidCancel")
+    }
+}
+```
+fails with diagnostic:
+```
+2018-05-11 23:16:27.481247+0200 my_gameofchats[23729:17845021] [discovery] errors encountered while discovering extensions: Error Domain=PlugInKit Code=13 "query cancelled" UserInfo={NSLocalizedDescription=query cancelled}
+```
+--- in video at 9:30
+
+However, downloaded gameofchats_05, built (after conversion to swift 4) - it works (picks and displays images)!
+
+Added ```UINavigationControllerDelegate```in
+```
+extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+```

@@ -146,10 +146,6 @@ class LoginController: UIViewController {
         return imageView
     }()
     
-    @objc func handleSelectProfileImageView() {
-        print("handleSelectProfileImageView")
-    }
-    
     lazy var loginRegisterSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Login", "Register"])
         sc.tintColor = UIColor.white
