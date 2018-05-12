@@ -47,6 +47,9 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                         let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl]
                         self.registerUserIntoDatabase(uid: uid, values: values as [String : AnyObject])
                     }
+                    
+                    let url = self.getProfileImageUrl(storageRef: storageRef)
+//                    print("url:", url!)
                 })
             }
         }
@@ -65,7 +68,19 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             
             self.dismiss(animated: true, completion: nil)
         })
-
+    }
+    
+    private func getProfileImageUrl(storageRef: StorageReference) -> URL? {
+        var retUrl: URL? = nil
+        storageRef.downloadURL { (url, error) in
+            if let error = error {
+                print("Error getting download URL: \(error)")
+                return
+            }
+            print("URL:", url!)
+            retUrl = url!
+        }
+        return retUrl
     }
     
     @objc func handleSelectProfileImageView() {
