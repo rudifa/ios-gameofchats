@@ -35,6 +35,7 @@ class NewMessageController: UITableViewController {
 
                 user.name = dict["name"] as? String
                 user.email = dict["email"] as? String
+                user.profileImageUrl = dict["profileImageUrl"] as? String
                 self.users.append(user)
                 
                 self.tableView.reloadData()
@@ -60,7 +61,21 @@ class NewMessageController: UITableViewController {
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
-        cell.imageView?.image = UIImage(named: "venetian500x500")
+        cell.imageView?.image = UIImage(named: "venetian500x500") // default
+        
+        if let profileImageUrl = user.profileImageUrl {
+            let url = NSURL(string: profileImageUrl)
+            URLSession.shared.dataTask(with: url! as URL, completionHandler: { (data, response, error) in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                DispatchQueue.main.async {
+                    cell.imageView?.image = UIImage(data: data!)
+                }
+            }).resume()
+        }
+        
         return cell
     }
 }
