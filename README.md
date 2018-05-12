@@ -184,3 +184,6 @@ Getting there ... the completion handlers are asynchronous callbacks!
 
 
 ### Ep 6 - How to Load Images from Firebase Storage
+
+
+[Meet the URLSession Family](https://cocoacasts.com/networking-in-swift-meet-the-urlsession-family) demonstrates the related methods, helps in converting from swift 3.
