@@ -35,6 +35,19 @@ class LoginController: UIViewController {
         return button
     }()
     
+    
+    let testButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor(r: 100, g: 121, b: 181)
+        button.setTitle("Test", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func handleLoginRegister() {
         let selIndex = loginRegisterSegmentedControl.selectedSegmentIndex
         if selIndex == 0 {
@@ -151,11 +164,13 @@ class LoginController: UIViewController {
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
         view.addSubview(loginRegisterSegmentedControl)
-        
+        view.addSubview(testButton)
+
         setupProfileImageView()
         setupLoginRegisterSegmentedControl()
         setupInputsContainerView()
         setupLoginRegisterButton()
+        setupTestButton()
     }
     
     func setupProfileImageView() {
@@ -233,6 +248,14 @@ class LoginController: UIViewController {
         loginRegisterButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 12).isActive = true
         loginRegisterButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1.0).isActive = true
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    func setupTestButton() {
+        // x, y, width, height constraints
+        testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        testButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24).isActive = true
+        testButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1.0).isActive = true
+        testButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

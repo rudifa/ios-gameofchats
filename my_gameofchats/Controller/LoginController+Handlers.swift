@@ -11,6 +11,18 @@ import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @objc func handleTest() {
+        print("Testing...")
+        Auth.auth().signIn(withEmail: "Fred@Q.com", password: "Freddie") {
+            (user, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     func handleRegister() {
         print("Registration ...")
         guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
