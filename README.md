@@ -187,3 +187,12 @@ Getting there ... the completion handlers are asynchronous callbacks!
 
 
 [Meet the URLSession Family](https://cocoacasts.com/networking-in-swift-meet-the-urlsession-family) demonstrates the related methods, helps in converting from swift 3.
+
+I had a problem with UserCell.profileImageView ... compiler did not recognize it as a property of UserCell() ... I must cast it to UserCell - I missed that in the video. Makes sense.
+
+```
+let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+```
+
+
+Next comes caching of images in the app.
