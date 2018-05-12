@@ -179,3 +179,8 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
 which fixed it.
 
 *Next: upload image to the Firebase Storage.*
+
+Getting there ... the completion handlers are asynchronous callbacks!
+
+
+### Ep 6 - How to Load Images from Firebase Storage
