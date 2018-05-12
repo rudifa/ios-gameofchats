@@ -13,7 +13,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
     
     func handleRegister() {
         print("Registration ...")
-        guard let _ = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
             print("*** Registration form is incomplete.")
             return
         }
@@ -32,7 +32,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             }
             print("User registered successfully:", uid)
 
-            // upload image to storage
+            // upload image to storage, get its url and add user to users
             let storageRef = Storage.storage().reference().child("myImage.png")
             if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
@@ -41,10 +41,16 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                         return
                     }
                     print(metadata!)
+                    
+                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                        print("profileImageUrl:", profileImageUrl)
+                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl]
+                        self.registerUserIntoDatabase(uid: uid, values: values as [String : AnyObject])
+                    }
                 })
-            } // end if
-        } // end Auth
-    } // end handleRegister
+            }
+        }
+    }
     
     private func registerUserIntoDatabase(uid: String, values: [String: AnyObject]) {
         // add user to the list of users in our database
