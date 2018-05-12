@@ -74,7 +74,8 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             print("User registered successfully:", uid)
 
             // upload image to storage, get its url and add user to users
-            let storageRef = Storage.storage().reference().child("myImage.png")
+            let imageName = NSUUID().uuidString + ".png"
+            let storageRef = Storage.storage().reference().child(imageName)
             if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
