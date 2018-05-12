@@ -11,46 +11,57 @@ import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
     func handleRegister() {
         print("Registration ...")
-        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+        guard let _ = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
             print("*** Registration form is incomplete.")
             return
         }
         
         // register user with the Firebase project admin
-        Auth.auth().createUser(withEmail: email, password: password) {
-            (user: User?, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { (user: User?, error) in
             if error != nil {
                 print(error!)
                 return
             }
-            print("User registered successfully.")
             
-            // add user to the list of users in our database
-            
+            // get user id
             guard let uid = user?.uid else {
                 print("*** Failed to get user uid.")
                 return
             }
+            print("User registered successfully:", uid)
+
+            // upload image to storage
+            let storageRef = Storage.storage().reference().child("myImage.png")
+            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    print(metadata!)
+                })
+            } // end if
+        } // end Auth
+    } // end handleRegister
+    
+    private func registerUserIntoDatabase(uid: String, values: [String: AnyObject]) {
+        // add user to the list of users in our database
+        let ref = Database.database().reference(fromURL: self.databaseUrl)
+        let userRef = ref.child("users").child(uid)
+        userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if err != nil {
+                print(err ?? "")
+                return
+            }
+            print("User added to users.")
             
-            let ref = Database.database().reference(fromURL: self.databaseUrl)
-            let userRef = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                if err != nil {
-                    print(err ?? "")
-                    return
-                }
-                print("User added to users.")
-                
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
+            self.dismiss(animated: true, completion: nil)
+        })
+
     }
     
-
     @objc func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
         picker.delegate = self

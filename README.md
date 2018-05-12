@@ -168,9 +168,14 @@ fails with diagnostic:
 ```
 --- in video at 9:30
 
+More importantly, the UIImagePickerControllerDelegate methods are not called.
+
 However, downloaded gameofchats_05, built (after conversion to swift 4) - it works (picks and displays images)!
 
 Added ```UINavigationControllerDelegate```in
 ```
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 ```
+which fixed it.
+
+*Next: upload image to the Firebase Storage.*
