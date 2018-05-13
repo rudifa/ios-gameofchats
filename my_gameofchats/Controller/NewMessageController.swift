@@ -62,16 +62,7 @@ class NewMessageController: UITableViewController {
         cell.detailTextLabel?.text = user.email
         
         if let profileImageUrl = user.profileImageUrl {
-            let url = NSURL(string: profileImageUrl)
-            URLSession.shared.dataTask(with: url! as URL, completionHandler: { (data, response, error) in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                DispatchQueue.main.async {
-                    cell.profileImageView.image = UIImage(data: data!)
-                }
-            }).resume()
+            cell.profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
         }
         
         return cell
@@ -100,6 +91,7 @@ class UserCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

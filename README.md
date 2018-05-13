@@ -195,4 +195,4 @@ let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
 ```
 
 
-Next comes caching of images in the app.
+Next comes caching of images in the app (after 16:00).
