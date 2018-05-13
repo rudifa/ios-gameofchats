@@ -11,7 +11,9 @@ import Firebase
 
 class LoginController: UIViewController {
     
-    //let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"] // no good
+    var messageController: MessageController?
+    
+
     let databaseUrl = "https://my-gameofchats.firebaseio.com"
     
     let inputsContainerView: UIView = {
@@ -69,9 +71,12 @@ class LoginController: UIViewController {
                 print(error!)
                 return
             }
+            print("Login successful.")
+            self.messageController?.fetchUserAndSetNavbarTitle()
             self.dismiss(animated: true, completion: nil)
         }
     }
+
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
@@ -240,7 +245,7 @@ class LoginController: UIViewController {
         passwordTextField.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
         passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: 1/3)
         passwordTextFieldHeightAnchor?.isActive = true
-  }
+    }
     
     func setupLoginRegisterButton() {
         // x, y, width, height constraints
@@ -249,7 +254,7 @@ class LoginController: UIViewController {
         loginRegisterButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1.0).isActive = true
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
+
     func setupTestButton() {
         // x, y, width, height constraints
         testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

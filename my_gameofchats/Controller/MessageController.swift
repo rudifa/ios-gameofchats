@@ -22,6 +22,11 @@ class MessageController: UITableViewController {
 //        checkIfUserIsLoggedIn()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkIfUserIsLoggedIn()
+    }
+
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
         let navController = UINavigationController(rootViewController: newMessageController)
@@ -32,22 +37,23 @@ class MessageController: UITableViewController {
         if Auth.auth().currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
-            // get user info
-            let uid = Auth.auth().currentUser?.uid
-            Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
-//                print(snapshot)
-                if let dict = snapshot.value as? [String: AnyObject] {
-                    self.navigationItem.title = dict["name"] as? String
-                }
-            }, withCancel: nil)
+            fetchUserAndSetNavbarTitle()
         }
     }
+    
+    func fetchUserAndSetNavbarTitle() {
+        // get user info
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                self.navigationItem.title = dict["name"] as? String
+            }
+        }, withCancel: nil)
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        checkIfUserIsLoggedIn()
     }
-
+    
     @objc func handleLogout() {
         do {
             try Auth.auth().signOut()
@@ -56,6 +62,7 @@ class MessageController: UITableViewController {
         }
         
         let loginController = LoginController()
+        loginController.messageController = self
         present(loginController, animated: true, completion: nil)
     }
 }

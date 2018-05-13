@@ -109,6 +109,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             }
             print("User added to users.")
             
+            self.messageController?.navigationItem.title = values["name"] as? String
             self.dismiss(animated: true, completion: nil)
         })
     }
