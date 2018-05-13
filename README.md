@@ -166,7 +166,6 @@ fails with diagnostic:
 ```
 2018-05-11 23:16:27.481247+0200 my_gameofchats[23729:17845021] [discovery] errors encountered while discovering extensions: Error Domain=PlugInKit Code=13 "query cancelled" UserInfo={NSLocalizedDescription=query cancelled}
 ```
---- in video at 9:30
 
 More importantly, the UIImagePickerControllerDelegate methods are not called.
 
@@ -194,5 +193,9 @@ I had a problem with UserCell.profileImageView ... compiler did not recognize it
 let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
 ```
 
+Added caching of images in the app - removes the unnecessary network traffic.
 
-Next comes caching of images in the app (after 16:00).
+Now storage, retrieval, caching and display of user images work.
+
+
+### Ep 7 - Lets Fix some Bugs and Use JPEG Image Compression
