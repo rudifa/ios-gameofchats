@@ -216,7 +216,14 @@ Adding code in new ```func setupNavbarWith```
 
 Something is not right, image is centered horizontally, title.View background is not red any more.
 
-Added containerView, with image and nameLabel
+Added containerView, with image and nameLabel.
 
 
 ### Ep 8 - How to Send Messages
+
+Revised ```func setupNavbarWith(user: UserData)```
+
+Tap on user image or name in MessageView navbar works - presents the new ChatLogController.
+Problem: on Back from ChatLogController, tap does not work (and the red background color of the titleView is lost temporarily); it works again after an Edit/Cancel.
+
+TODO nameLabel vertical anchors should follow those of profileImageView

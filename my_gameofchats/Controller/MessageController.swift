@@ -61,7 +61,7 @@ class MessageController: UITableViewController {
     }
 
     func setupNavbarWith(user: UserData) {
-        print("MessageController.setupNavbarWith")
+        print("MessageController.fetchUserAndSetNavbarTitle")
 
         let titleView = UIView()
         titleView.frame = CGRect(x:0, y:0, width: 100, height: 40)
@@ -106,6 +106,9 @@ class MessageController: UITableViewController {
         nameLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+
+        // if I move this code down here (like it is in the episode 7), the tap does not work and the red bckground is also missing)
+//        self.navigationItem.titleView = titleView
 
         titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController) ))
     }
