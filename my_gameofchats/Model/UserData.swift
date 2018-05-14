@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserData: NSObject {
+@objcMembers class UserData: NSObject {
     var name: String?
     var email: String?
     var profileImageUrl: String?

@@ -113,7 +113,7 @@ Fetch user data from database and display in a custom UserCell, in the NewMessag
 ```
 Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in ...
 ```
-Problems (workarounds found)
+Problem:
 
 ```
 if let dict = snapshot.value as? [String: AnyObject] {
@@ -122,6 +122,13 @@ if let dict = snapshot.value as? [String: AnyObject] {
     // ^^^ this class is not key value coding-compliant for the key name.'
     ...
 ```
+*Later ...
+Solution: prefix class with @objcMembers*
+```
+@objcMembers class UserData: NSObject {
+```
+Problem:
+
 ```
 //  dispatch_async(dispatch_get_main_queue(), {
 //      self.tableView.reloadData()
@@ -199,3 +206,12 @@ Now storage, retrieval, caching and display of user images work.
 
 
 ### Ep 7 - Lets Fix some Bugs and Use JPEG Image Compression
+
+Makes sure that the user name appears in the title bar.
+Replaces PNG by low quality JPEG image - reduces storage space and load time.
+
+Next: put the user image into the title bar.
+
+Adding code in new ```func setupNavbarWith```
+
+Something is not right, imag is centered horizontally, title.View background is not red any more.
