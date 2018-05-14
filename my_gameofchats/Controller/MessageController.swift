@@ -58,10 +58,9 @@ class MessageController: UITableViewController {
     }
 
     func setupNavbarWith(user: UserData) {
-//        self.navigationItem.title = user.name
+
         let titleView = UIView()
         titleView.frame = CGRect(x:0, y:0, width: 100, height: 40)
-        titleView.backgroundColor = UIColor.red
 
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,10 +84,10 @@ class MessageController: UITableViewController {
         profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         let nameLabel = UILabel()
+        containerView.addSubview(nameLabel)
+
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        containerView.addSubview(nameLabel)
 
         // x, y, width, height constraints
         nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 6).isActive = true
