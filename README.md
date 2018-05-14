@@ -214,4 +214,9 @@ Next: put the user image into the title bar.
 
 Adding code in new ```func setupNavbarWith```
 
-Something is not right, imag is centered horizontally, title.View background is not red any more.
+Something is not right, image is centered horizontally, title.View background is not red any more.
+
+Added containerView, with image and nameLabel
+
+
+### Ep 8 - How to Send Messages
