@@ -226,4 +226,18 @@ Revised ```func setupNavbarWith(user: UserData)```
 Tap on user image or name in MessageView navbar works - presents the new ChatLogController.
 Problem: on Back from ChatLogController, tap does not work (and the red background color of the titleView is lost temporarily); it works again after an Edit/Cancel.
 
-TODO nameLabel vertical anchors should follow those of profileImageView
+Leaving that mystery open for now.
+
+Added inputTextField + Send, sending messages to database
+
+```
+@objc func handleSend() {
+    let ref = Database.database().reference().child("messages")
+    let childRef = ref.childByAutoId()
+    let values = ["text": inputTextField.text]
+    childRef.updateChildValues(values as Any as! [AnyHashable : Any])
+}
+```
+
+
+### Ep 9 - How to Load Messages

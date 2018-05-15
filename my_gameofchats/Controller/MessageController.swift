@@ -30,6 +30,7 @@ class MessageController: UITableViewController {
 
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
     }
@@ -111,16 +112,16 @@ class MessageController: UITableViewController {
         // the tap does not work and the red background is missing : when comming from tap/back
         // WHY?
 
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController) ))
-
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogControllerFor)))
         DispatchQueue.main.async {
             self.navigationItem.titleView?.printSubviews()
         }
     }
 
-    @objc func showChatLogController() {
+    @objc func showChatLogControllerFor(user: UserData) {
         print("showChatLogController")
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
 
