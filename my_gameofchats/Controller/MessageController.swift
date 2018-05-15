@@ -120,7 +120,7 @@ class MessageController: UITableViewController {
 
     @objc func showChatLogController() {
         print("showChatLogController")
-        let chatLogController = ChatLogController()
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(chatLogController, animated: true)
     }
 
