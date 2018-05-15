@@ -26,11 +26,12 @@ class NewMessageController: UITableViewController {
     }
     
     func fetchUser() {
-        Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+        Database.database().reference().child("users").observe(.childAdded, with: {
+            (snapshot) in
             
             if let dict = snapshot.value as? [String: AnyObject] {
                 let user = UserData()
-                
+                user.id = snapshot.key
                 // user.setValuesForKeys(dict) // this class is not key value coding-compliant for the key name.'
 
                 user.name = dict["name"] as? String

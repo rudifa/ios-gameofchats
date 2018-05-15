@@ -241,3 +241,6 @@ Added inputTextField + Send, sending messages to database
 
 
 ### Ep 9 - How to Load Messages
+
+User opens Edit/newMassageController and selects another user.
+This opens the ChatLogController, with the other user's name in the navbar title.

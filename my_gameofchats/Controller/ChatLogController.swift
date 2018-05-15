@@ -79,7 +79,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     @objc func handleSend() {
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId()
-        let values = ["text": inputTextField.text]
+        let toId = user?.id
+        let values = ["text": inputTextField.text, "toId": toId]
         childRef.updateChildValues(values as Any as! [AnyHashable : Any])
     }
 
