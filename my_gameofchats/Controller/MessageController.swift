@@ -124,10 +124,11 @@ class MessageController: UITableViewController {
         navigationController?.pushViewController(chatLogController, animated: true)
     }
 
-    func printSubviews(view: UIView) {
-        print(view)
+    func printSubviews(view: UIView, indent: String = "") {
+        print("\(indent)\(view)")
+        let indent = indent + "| "
         for sub in view.subviews {
-            printSubviews(view: sub)
+            printSubviews(view: sub, indent: indent)
         }
     }
 
