@@ -36,3 +36,16 @@ extension UIImageView {
     }
     
 }
+
+
+extension UIView {
+
+    func printSubviews(indent: String = "") {
+        print("\(indent)\(self)")
+        let indent = indent + "| "
+        for sub in self.subviews {
+            sub.printSubviews(indent: indent)
+        }
+    }
+
+}

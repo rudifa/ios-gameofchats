@@ -114,7 +114,7 @@ class MessageController: UITableViewController {
         titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController) ))
 
         DispatchQueue.main.async {
-            self.printSubviews(view: self.navigationItem.titleView!)
+            self.navigationItem.titleView?.printSubviews()
         }
     }
 
@@ -122,14 +122,6 @@ class MessageController: UITableViewController {
         print("showChatLogController")
         let chatLogController = ChatLogController()
         navigationController?.pushViewController(chatLogController, animated: true)
-    }
-
-    func printSubviews(view: UIView, indent: String = "") {
-        print("\(indent)\(view)")
-        let indent = indent + "| "
-        for sub in view.subviews {
-            printSubviews(view: sub, indent: indent)
-        }
     }
 
     @objc func handleLogout() {
