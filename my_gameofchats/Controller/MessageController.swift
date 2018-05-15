@@ -30,7 +30,6 @@ class MessageController: UITableViewController {
     func observeMessages() {
         let ref = Database.database().reference().child("messages")
         ref.observe(.childAdded, with: { (snapshot) in
-//            print(snapshot)
             if let dict = snapshot.value as? [String: AnyObject] {
                 let message = Message()
                 message.setValuesForKeys(dict)

@@ -244,3 +244,36 @@ Added inputTextField + Send, sending messages to database
 
 User opens Edit/newMassageController and selects another user.
 This opens the ChatLogController, with the other user's name in the navbar title.
+
+Added class Message, sending it to the database, retrieving from database and displaying them in the table view.
+
+```
+@objc func handleSend() {
+    let ref = Database.database().reference().child("messages")
+    let childRef = ref.childByAutoId()
+    let toId = user?.id
+    let fromId = Auth.auth().currentUser?.uid
+    let timestamp = NSNumber(value: Int(NSDate().timeIntervalSince1970))
+    let values = ["text": inputTextField.text!, "toId": toId!, "fromId": fromId!, "timestamp": timestamp] as [String : Any]
+    childRef.updateChildValues(values as Any as! [AnyHashable : Any])
+}
+```
+
+```
+
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.setValuesForKeys(dict)
+                self.messages.append(message)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+           }
+        })
+    }
+```
+
+### EP 10 - How to Group Messages Per User
