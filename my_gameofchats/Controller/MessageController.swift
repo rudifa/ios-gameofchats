@@ -11,6 +11,8 @@ import Firebase
 
 class MessageController: UITableViewController {
 
+    var messages = [Message]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,8 +22,39 @@ class MessageController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
 
 //        checkIfUserIsLoggedIn()
+
+        observeMessages()
+
     }
-    
+
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+//            print(snapshot)
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.setValuesForKeys(dict)
+                self.messages.append(message)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+           }
+        })
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.toId
+        cell.detailTextLabel?.text = message.text
+        return cell
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("MessageController.viewWillAppear")

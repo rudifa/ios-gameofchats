@@ -14,3 +14,10 @@ import UIKit
     var email: String?
     var profileImageUrl: String?
 }
+
+@objcMembers class Message: NSObject {
+    var fromId: String?
+    var toId: String?
+    var text: String?
+    var timestamp: NSNumber?
+}
