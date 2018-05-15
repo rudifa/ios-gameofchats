@@ -64,21 +64,22 @@ class MessageController: UITableViewController {
         print("MessageController.setupNavbarWith")
 
         let titleView = UIView()
+        self.navigationItem.titleView = titleView
         titleView.frame = CGRect(x:0, y:0, width: 100, height: 40)
         titleView.backgroundColor = UIColor.red
 
-        self.navigationItem.titleView = titleView
 
         let containerView = UIView()
+        titleView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = UIColor.orange
-        titleView.addSubview(containerView)
 
         // x, y constraints
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
 
         let profileImageView = UIImageView()
+        containerView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 20
@@ -86,7 +87,6 @@ class MessageController: UITableViewController {
         if let profileImageUrl = user.profileImageUrl {
             profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
         }
-        containerView.addSubview(profileImageView)
         // x, y, width, height constraints
         profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
@@ -107,10 +107,15 @@ class MessageController: UITableViewController {
         nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
 
-        // if I move this code down here (like it is in the episode 7), the tap does not work and the red bckground is also missing)
-//        self.navigationItem.titleView = titleView
+        // the tap works and the red background is present : when coming from register or login, or from edit/cancel
+        // the tap does not work and the red background is missing : when comming from tap/back
+        // WHY?
 
         titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController) ))
+
+        DispatchQueue.main.async {
+            self.printSubviews(view: self.navigationItem.titleView!)
+        }
     }
 
     @objc func showChatLogController() {
@@ -119,6 +124,12 @@ class MessageController: UITableViewController {
         navigationController?.pushViewController(chatLogController, animated: true)
     }
 
+    func printSubviews(view: UIView) {
+        print(view)
+        for sub in view.subviews {
+            printSubviews(view: sub)
+        }
+    }
 
     @objc func handleLogout() {
         do {
