@@ -41,6 +41,12 @@ class MessageController: UITableViewController {
         })
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("MessageController.viewWillAppear")
+        checkIfUserIsLoggedIn()
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
@@ -49,15 +55,20 @@ class MessageController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
 
         let message = messages[indexPath.row]
-        cell.textLabel?.text = message.toId
+
+        if let toId = message.toId {
+            let ref = Database.database().reference().child("users").child(toId)
+            ref.observe(.value, with: {
+                (snapshot) in
+//                print(snapshot)
+                if let dict = snapshot.value as? [String: AnyObject] {
+                    cell.textLabel?.text = dict["name"] as? String
+                }
+            })
+        }
+//        cell.textLabel?.text = message.toId
         cell.detailTextLabel?.text = message.text
         return cell
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("MessageController.viewWillAppear")
-        checkIfUserIsLoggedIn()
     }
 
     @objc func handleNewMessage() {
