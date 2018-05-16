@@ -110,13 +110,13 @@ class MessageController: UITableViewController {
         let titleView = UIView()
         self.navigationItem.titleView = titleView
         titleView.frame = CGRect(x:0, y:0, width: 100, height: 40)
-        titleView.backgroundColor = UIColor.red
+//        titleView.backgroundColor = UIColor.red
 
 
         let containerView = UIView()
         titleView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = UIColor.orange
+//        containerView.backgroundColor = UIColor.orange
 
         // x, y constraints
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
