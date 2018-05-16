@@ -101,7 +101,8 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
     
     private func registerUserIntoDatabase(uid: String, values: [String: AnyObject]) {
         // add user to the list of users in our database
-        let ref = Database.database().reference(fromURL: self.databaseUrl)
+//        let ref = Database.database().reference(fromURL: self.databaseUrl)
+        let ref = Database.database().reference()
         let userRef = ref.child("users").child(uid)
         userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {
