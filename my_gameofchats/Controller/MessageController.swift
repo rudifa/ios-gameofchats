@@ -155,7 +155,7 @@ class MessageController: UITableViewController {
         // the tap does not work and the red background is missing : when comming from tap/back
         // WHY?
 
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogControllerFor)))
+//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogControllerFor)))
         DispatchQueue.main.async {
             self.navigationItem.titleView?.printSubviews()
         }
