@@ -57,7 +57,7 @@ class MessageController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
 
         let message = messages[indexPath.row]
 
@@ -68,12 +68,20 @@ class MessageController: UITableViewController {
 //                print(snapshot)
                 if let dict = snapshot.value as? [String: AnyObject] {
                     cell.textLabel?.text = dict["name"] as? String
+
+                    if let profileImageUrl = dict["profileImageUrl"] as? String  {
+                        cell.profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
+                    }
                 }
             })
         }
 //        cell.textLabel?.text = message.toId
         cell.detailTextLabel?.text = message.text
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
 
     @objc func handleNewMessage() {
