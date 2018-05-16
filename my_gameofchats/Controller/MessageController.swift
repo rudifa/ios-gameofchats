@@ -11,6 +11,8 @@ import Firebase
 
 class MessageController: UITableViewController {
 
+    let cellId = "cellId"
+
     var messages = [Message]()
 
     override func viewDidLoad() {
@@ -21,7 +23,9 @@ class MessageController: UITableViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
 
-//        checkIfUserIsLoggedIn()
+        checkIfUserIsLoggedIn()
+
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
 
         observeMessages()
 
@@ -52,7 +56,8 @@ class MessageController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
 
         let message = messages[indexPath.row]
 
