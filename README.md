@@ -277,3 +277,10 @@ Added class Message, sending it to the database, retrieving from database and di
 ```
 
 ### EP 10 - How to Group Messages Per User
+
+It looks like we do not need to use the ```databaseUrl```explicitely in the code. If so, how does the Firebase code get it? Directly from the .plist?
+
+```
+//        let ref = Database.database().reference(fromURL: self.databaseUrl)
+        let ref = Database.database().reference()
+```
