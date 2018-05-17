@@ -26,7 +26,12 @@ class UserCell: UITableViewCell {
                     }
                 })
             }
-            self.detailTextLabel?.text = message?.text
+            detailTextLabel?.text = message?.text
+//            timeLabel.text = message?.timestamp?.stringValue
+            if let seconds = message?.timestamp?.doubleValue {
+                let timestampDate = NSDate(timeIntervalSince1970: seconds)
+                timeLabel.text = timestampDate.description
+            }
         }
     }
 
@@ -42,7 +47,6 @@ class UserCell: UITableViewCell {
 
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = UIImage(named: "nedstark")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 24
         imageView.layer.masksToBounds = true
@@ -50,16 +54,33 @@ class UserCell: UITableViewCell {
         return imageView
     }()
 
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HH:MM:SS"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
 
         addSubview(profileImageView)
+        addSubview(timeLabel)
 
         // x, y, width, height constraints
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+
+        // x, y, width, height constraints
+        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        timeLabel.heightAnchor.constraint(equalTo: (textLabel?.heightAnchor)!).isActive = true
+
     }
 
     required init?(coder aDecoder: NSCoder) {
