@@ -58,25 +58,7 @@ class MessageController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
-
-        let message = messages[indexPath.row]
-
-        if let toId = message.toId {
-            let ref = Database.database().reference().child("users").child(toId)
-            ref.observe(.value, with: {
-                (snapshot) in
-//                print(snapshot)
-                if let dict = snapshot.value as? [String: AnyObject] {
-                    cell.textLabel?.text = dict["name"] as? String
-
-                    if let profileImageUrl = dict["profileImageUrl"] as? String  {
-                        cell.profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
-                    }
-                }
-            })
-        }
-//        cell.textLabel?.text = message.toId
-        cell.detailTextLabel?.text = message.text
+        cell.message = messages[indexPath.row]
         return cell
     }
 
