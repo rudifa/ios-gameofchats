@@ -14,6 +14,7 @@ class MessageController: UITableViewController {
     let cellId = "cellId"
 
     var messages = [Message]()
+    var messagesDictionary = [String: Message]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,15 @@ class MessageController: UITableViewController {
             if let dict = snapshot.value as? [String: AnyObject] {
                 let message = Message()
                 message.setValuesForKeys(dict)
-                self.messages.append(message)
+
+                if let toId = message.toId {
+                    self.messagesDictionary[toId] = message
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sort(by: { (message1, message2) -> Bool in
+                        return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
+                    })
+                }
+
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
