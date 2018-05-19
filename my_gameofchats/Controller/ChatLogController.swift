@@ -60,9 +60,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
 
 //        navigationItem.title = "Chat Log"
 
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
 
         setupInputComponents()
     }
@@ -75,11 +76,22 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCell
         let message = messages[indexPath.row]
         cell.textView.text = message.text
+        cell.bubbleWidthAnchor?.constant = estimateFrameForText(text: message.text!).width + 32
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 80)
+        var height: CGFloat = 80
+        if let text = messages[indexPath.row].text {
+            height = estimateFrameForText(text: text).height + 20
+        }
+        return CGSize(width: view.frame.width, height: height)
+    }
+
+    private func estimateFrameForText(text: String) -> CGRect {
+        let size = CGSize(width: 200, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 
     func setupInputComponents() {
@@ -136,7 +148,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 print(error!)
                 return
             }
-            self.inputTextField.text = ""
+            self.inputTextField.text = nil
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromId!)
             let messageId = childRef.key
             userMessagesRef.updateChildValues([messageId: 1]) // id of latest message from fromId

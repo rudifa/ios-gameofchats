@@ -299,3 +299,5 @@ Multi-path updates allow the client to update several locations with one object.
 ### Ep 12 - How to Load Entire Chat Log per User
 
 In ChatLogController add ChatMessageCell and populate from the chat.
+
+### EP 13 - How to Create Chat Bubbles using Constraints
