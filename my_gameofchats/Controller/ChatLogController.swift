@@ -93,7 +93,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromId!)
             let messageId = childRef.key
             userMessagesRef.updateChildValues([messageId: 1]) // id of latest message from fromId
-        }
+
+            let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!)
+            recipientMessagesRef.updateChildValues([messageId: 1]) // id of latest message to toId
+      }
 
     }
 

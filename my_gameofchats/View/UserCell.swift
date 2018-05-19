@@ -13,25 +13,37 @@ class UserCell: UITableViewCell {
 
     var message : Message? {
         didSet {
-            if let toId = message?.toId {
-                let ref = Database.database().reference().child("users").child(toId)
-                ref.observe(.value, with: {
-                    (snapshot) in
-                    if let dict = snapshot.value as? [String: AnyObject] {
-                        self.textLabel?.text = dict["name"] as? String
+            setupNameAndProfileImage()
+        }
+    }
 
-                        if let profileImageUrl = dict["profileImageUrl"] as? String  {
-                            self.profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
-                        }
+    private func setupNameAndProfileImage() {
+
+        let chatPartnerId: String?
+        if message?.fromId == Auth.auth().currentUser?.uid {
+            chatPartnerId = (message?.toId)!
+        } else {
+            chatPartnerId = (message?.fromId)!
+        }
+
+        if let id = chatPartnerId {
+            let ref = Database.database().reference().child("users").child(id)
+            ref.observe(.value, with: {
+                (snapshot) in
+                if let dict = snapshot.value as? [String: AnyObject] {
+                    self.textLabel?.text = dict["name"] as? String
+
+                    if let profileImageUrl = dict["profileImageUrl"] as? String  {
+                        self.profileImageView.loadImageCachingFrom(imageUrl: profileImageUrl)
                     }
-                })
-            }
-            detailTextLabel?.text = message?.text
-//            timeLabel.text = message?.timestamp?.stringValue
-            if let seconds = message?.timestamp?.doubleValue {
-                let timestampDate = NSDate(timeIntervalSince1970: seconds)
-                timeLabel.text = timestampDate.description
-            }
+                }
+            })
+        }
+        detailTextLabel?.text = message?.text
+        //            timeLabel.text = message?.timestamp?.stringValue
+        if let seconds = message?.timestamp?.doubleValue {
+            let timestampDate = NSDate(timeIntervalSince1970: seconds)
+            timeLabel.text = timestampDate.description
         }
     }
 
@@ -56,7 +68,6 @@ class UserCell: UITableViewCell {
 
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "HH:MM:SS"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.lightGray
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -29,7 +29,6 @@ class MessageController: UITableViewController {
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
 
 //        observeMessages()
-        observeUserMessages()
 
     }
 
@@ -141,6 +140,12 @@ class MessageController: UITableViewController {
 
     func setupNavbarWith(user: UserData) {
         print("MessageController.setupNavbarWith")
+
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
 
         let titleView = UIView()
         self.navigationItem.titleView = titleView
