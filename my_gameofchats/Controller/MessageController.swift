@@ -28,11 +28,42 @@ class MessageController: UITableViewController {
 
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
 
-        observeMessages()
+//        observeMessages()
+        observeUserMessages()
 
     }
 
+    func observeUserMessages() {
+        // here we display all messages from currentUser
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded) { (snapshot) in
+            let messageId = snapshot.key
+            let messageRef = Database.database().reference().child("messages").child(messageId)
+            messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                print(snapshot)
+                if let dict = snapshot.value as? [String: AnyObject] {
+                    let message = Message()
+                    message.setValuesForKeys(dict)
+
+                    if let toId = message.toId {
+                        self.messagesDictionary[toId] = message
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages.sort(by: { (message1, message2) -> Bool in
+                            return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
+                        })
+                    }
+
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+           })
+        }
+    }
+
     func observeMessages() {
+        // here we display all user messages
         let ref = Database.database().reference().child("messages")
         ref.observe(.childAdded, with: { (snapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
