@@ -301,3 +301,5 @@ Multi-path updates allow the client to update several locations with one object.
 In ChatLogController add ChatMessageCell and populate from the chat.
 
 ### EP 13 - How to Create Chat Bubbles using Constraints
+
+Adds the bubbleView to the ChatMessageCell and adjusts its size to the message text.
