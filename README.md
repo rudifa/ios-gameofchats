@@ -295,3 +295,7 @@ Consider [Client-side fan-out](https://firebase.googleblog.com/2015/10/client-si
 
 *Fan-out itself is the process duplicating data in the database. When data is duplicated it eliminates slow joins and increases read performance.
 Multi-path updates allow the client to update several locations with one object. We call this client-side fan-out, because data is "fanned" across several locations.*
+
+### Ep 12 - How to Load Entire Chat Log per User
+
+In ChatLogController add ChatMessageCell and populate from the chat.

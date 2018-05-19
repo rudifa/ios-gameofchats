@@ -105,6 +105,22 @@ class MessageController: UITableViewController {
         return 72
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+//        print(message.text!, message.fromId!, message.toId!)
+        guard let chatPartnerId = message.chatPartnerId() else { return }
+
+        let ref = Database.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            print(snapshot)
+            guard let dict = snapshot.value as? [String: AnyObject] else { return}
+            let user = UserData()
+            user.id = chatPartnerId
+            user.setValuesForKeys(dict)
+            self.showChatLogControllerFor(user: user)
+        })
+    }
+
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
         newMessageController.messagesController = self
