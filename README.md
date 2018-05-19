@@ -285,4 +285,13 @@ It looks like we do not need to use the ```databaseUrl```explicitly in the code.
         let ref = Database.database().reference()
 ```
 
-Moved code handling teh profileImage into UserCell.
+Moved code handling the profileImage into UserCell.
+
+Modified observeMessages to display only the latest message from the current user to each user.
+
+### Ep 11 - How to Reduce Cost and Support Multiple Users
+
+Consider [Client-side fan-out](https://firebase.googleblog.com/2015/10/client-side-fan-out-for-data-consistency_73.html):
+
+*Fan-out itself is the process duplicating data in the database. When data is duplicated it eliminates slow joins and increases read performance.
+Multi-path updates allow the client to update several locations with one object. We call this client-side fan-out, because data is "fanned" across several locations.*

@@ -84,6 +84,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let timestamp = NSNumber(value: Int(NSDate().timeIntervalSince1970))
         let values = ["text": inputTextField.text!, "toId": toId!, "fromId": fromId!, "timestamp": timestamp] as [String : Any]
         childRef.updateChildValues(values as Any as! [AnyHashable : Any])
+
+        inputTextField.text = ""
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
