@@ -77,8 +77,21 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCell
         let message = messages[indexPath.row]
         cell.textView.text = message.text
+
+        setupCell(cell: cell, message: message)
+
         cell.bubbleWidthAnchor?.constant = estimateFrameForText(text: message.text!).width + 32
         return cell
+    }
+
+    private func setupCell(cell: ChatMessageCell, message: Message) {
+        if message.fromId != Auth.auth().currentUser?.uid {
+            cell.bubbleView.backgroundColor = ChatMessageCell.lightGray
+            cell.textView.textColor = UIColor.black
+        } else {
+            cell.bubbleView.backgroundColor = ChatMessageCell.blue
+            cell.textView.textColor = UIColor.white
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
