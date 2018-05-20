@@ -296,6 +296,36 @@ Consider [Client-side fan-out](https://firebase.googleblog.com/2015/10/client-si
 *Fan-out itself is the process duplicating data in the database. When data is duplicated it eliminates slow joins and increases read performance.
 Multi-path updates allow the client to update several locations with one object. We call this client-side fan-out, because data is "fanned" across several locations.*
 
+```
+@objc func handleSend() {
+    let ref = Database.database().reference().child("messages")
+    let childRef = ref.childByAutoId() // create a messageId
+    let toId = user?.id
+    let fromId = Auth.auth().currentUser?.uid
+    let timestamp = NSNumber(value: Int(NSDate().timeIntervalSince1970))
+    let values = ["text": inputTextField.text!, "toId": toId!, "fromId": fromId!, "timestamp": timestamp] as [String : Any]
+
+    // Store message values under "messages"/messageId
+    childRef.updateChildValues(values as Any as! [AnyHashable : Any]) {
+        (error, ref) in
+        if error != nil { return }
+        self.inputTextField.text = nil
+        
+        let messageId = childRef.key
+        let senderMessagesRef = Database.database().reference().child("user-messages").child(fromId!)
+        let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!)
+
+        // Store messageId under "user-messages"/fromId
+        senderMessagesRef.updateChildValues([messageId: 1]) // id of latest message from fromId
+
+        // Store messageId under "user-messages"/toId
+        recipientMessagesRef.updateChildValues([messageId: 1]) // id of latest message to toId
+  }
+}
+```
+
+So, under the node ```"user-messages"``` the app can look up ```messageId``` of all messages where a given user is either sender or receiver, then recover the actual message values (data) from the node ```"messages"```.
+
 ### Ep 12 - How to Load Entire Chat Log per User
 
 In ChatLogController add ChatMessageCell and populate from the chat.
@@ -303,3 +333,5 @@ In ChatLogController add ChatMessageCell and populate from the chat.
 ### EP 13 - How to Create Chat Bubbles using Constraints
 
 Adds the bubbleView to the ChatMessageCell and adjusts its size to the message text.
+
+### Ep 14 - Gray Chat Bubbles and Main Messages Bug Fix
