@@ -310,7 +310,7 @@ Multi-path updates allow the client to update several locations with one object.
         (error, ref) in
         if error != nil { return }
         self.inputTextField.text = nil
-        
+
         let messageId = childRef.key
         let senderMessagesRef = Database.database().reference().child("user-messages").child(fromId!)
         let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!)
@@ -332,6 +332,6 @@ In ChatLogController add ChatMessageCell and populate from the chat.
 
 ### EP 13 - How to Create Chat Bubbles using Constraints
 
-Adds the bubbleView to the ChatMessageCell and adjusts its size to the message text.
+Adds the bubbleView to the ChatMessageCell and adjusts its size to the message text. At this stage, messages from both chat partners appear in blue bubbles.
 
 ### Ep 14 - Gray Chat Bubbles and Main Messages Bug Fix
