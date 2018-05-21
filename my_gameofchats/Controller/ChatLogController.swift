@@ -73,10 +73,30 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
 
     func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self)
     }
 
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        print(notification.userInfo as Any)
+        let keyboardFrame = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+
+        containerViewBottomAnchor?.constant = -keyboardFrame.height
+        UIView.animate(withDuration: keyboardDuration, animations: {
+            self.view.layoutIfNeeded()})
+    }
+
+    @objc func handleKeyboardWillHide(notification: NSNotification) {
+        let keyboardDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+
+        containerViewBottomAnchor?.constant = 0
+        UIView.animate(withDuration: keyboardDuration, animations: {
+            self.view.layoutIfNeeded()})
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -131,6 +151,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 
+    var containerViewBottomAnchor: NSLayoutConstraint?
+
     func setupInputComponents() {
 
         let containerView = UIView()
@@ -139,7 +161,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         containerView.translatesAutoresizingMaskIntoConstraints = false
         // x, y, width, height constraints
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        containerViewBottomAnchor?.isActive = true
+
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         containerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
