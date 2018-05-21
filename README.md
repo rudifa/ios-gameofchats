@@ -353,7 +353,7 @@ Fixed by adding ```inputTextField.resignFirstResponder()```call in handleSend.
 ### Ep 16 - How to Observe Chat Log Per User
 
 Restructured "user-messages"
-
+```
 user-messages
 |--fromId
 |  |--toId
@@ -362,5 +362,7 @@ user-messages
 |  |  |--msgId...
 |  |--toId...
 |--fromId...
-
+```
 LoginController: added code to textInputFields to close the keyboard on Done (Return) key tap.
+
+### Ep 17 - How to Send Image Messages
