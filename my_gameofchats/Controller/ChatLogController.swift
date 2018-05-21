@@ -199,7 +199,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
 
     @objc func handleSend() {
         let text = inputTextField.text!
-        if text.isBlank() { return }
+        if text.isBlank() {
+            inputTextField.resignFirstResponder()
+            return
+        }
 
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId() // create a messageId
@@ -220,8 +223,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
 
             let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!)
             recipientMessagesRef.updateChildValues([messageId: 1]) // id of latest message to toId
-      }
 
+        }
+        inputTextField.resignFirstResponder()
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
