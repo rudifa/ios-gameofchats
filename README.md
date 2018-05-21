@@ -324,7 +324,7 @@ Multi-path updates allow the client to update several locations with one object.
 }
 ```
 
-So, under the node ```"user-messages"``` the app can look up ```messageId``` of all messages where a given user is either sender or receiver, then recover the actual message values (data) from the node ```"messages"```.
+So, under the node ```"user-messages"``` the app can look up ```messageId``` of all messages where a given user is either sender or receiver, then recover the actual message values (data) from the node ```"messages"```, and display only the latest message for each participant in chats.
 
 ### Ep 12 - How to Load Entire Chat Log per User
 
@@ -334,4 +334,10 @@ In ChatLogController add ChatMessageCell and populate from the chat.
 
 Adds the bubbleView to the ChatMessageCell and adjusts its size to the message text. At this stage, messages from both chat partners appear in blue bubbles.
 
-### Ep 14 - Gray Chat Bubbles and Main Messages Bug Fix
+### Ep 14 - Grey Chat Bubbles and Main Messages Bug Fix
+
+Adds the modifiers to bubbleView, to distinguish to/from bubbles in position, color and presence of the chat partner's image.
+
+Adds a hack to keep the number of tableView.reloadData in MessageView to a minimum.
+
+### Ep 15 - How to Implement Interactive Keyboard
