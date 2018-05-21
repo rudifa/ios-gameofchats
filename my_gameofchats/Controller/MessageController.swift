@@ -33,25 +33,30 @@ class MessageController: UITableViewController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded) { (snapshot) in
-            let messageId = snapshot.key
-            let messageRef = Database.database().reference().child("messages").child(messageId)
-            messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                if let dict = snapshot.value as? [String: AnyObject] {
-                    let message = Message()
-                    message.setValuesForKeys(dict)
-                    if let chatPartnerId = message.chatPartnerId() {
-                        // keep one message per chat partner
-                        self.messagesDictionary[chatPartnerId] = message
-                        self.messages = Array(self.messagesDictionary.values)
-                        self.messages.sort(by: { (message1, message2) -> Bool in
-                            return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
-                        })
+            let userId = snapshot.key
+            Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: {
+                (snapshot) in
+
+                let messageId = snapshot.key
+                let messageRef = Database.database().reference().child("messages").child(messageId)
+                messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let dict = snapshot.value as? [String: AnyObject] {
+                        let message = Message()
+                        message.setValuesForKeys(dict)
+                        if let chatPartnerId = message.chatPartnerId() {
+                            // keep one message per chat partner
+                            self.messagesDictionary[chatPartnerId] = message
+                            self.messages = Array(self.messagesDictionary.values)
+                            self.messages.sort(by: { (message1, message2) -> Bool in
+                                return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
+                            })
+                        }
+                        // use the timer to prevent too frequent calls to handleReloadTable
+                        self.timer?.invalidate()
+                        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                     }
-                    // use the timer to prevent too frequent calls to handleReloadTable
-                    self.timer?.invalidate()
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
-                }
-           })
+                })
+            })
         }
     }
 

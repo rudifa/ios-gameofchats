@@ -24,24 +24,19 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var messages = [Message]()
 
     func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        guard let uid = Auth.auth().currentUser?.uid, let toId = user?.id else { return }
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toId)
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
-//            print(snapshot)
             let messageId = snapshot.key
             let messageRef = Database.database().reference().child("messages").child(messageId)
             messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//                print(snapshot)
                 guard let dict = snapshot.value as? [String: AnyObject] else { return }
                 let message = Message()
                 message.setValuesForKeys(dict)
-                print(message.text!)
-                if message.chatPartnerId() == self.user?.id {
-                    self.messages.append(message)
-                    DispatchQueue.main.async {
-                        self.collectionView?.reloadData()
-                        self.collectionView?.scrollToItem(at: IndexPath(item: self.messages.count - 1, section: 0), at: UICollectionViewScrollPosition.bottom, animated: false)
-                    }
+                self.messages.append(message)
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                    self.collectionView?.scrollToItem(at: IndexPath(item: self.messages.count - 1, section: 0), at: UICollectionViewScrollPosition.bottom, animated: false)
                 }
             })
         })
@@ -217,11 +212,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 return
             }
             self.inputTextField.text = nil
-            let userMessagesRef = Database.database().reference().child("user-messages").child(fromId!)
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromId!).child(toId!)
             let messageId = childRef.key
             userMessagesRef.updateChildValues([messageId: 1]) // id of latest message from fromId
 
-            let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!)
+            let recipientMessagesRef = Database.database().reference().child("user-messages").child(toId!).child(fromId!)
             recipientMessagesRef.updateChildValues([messageId: 1]) // id of latest message to toId
 
         }
