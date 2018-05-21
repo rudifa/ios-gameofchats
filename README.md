@@ -346,8 +346,21 @@ Shows two ways to implement moving the input field up with the keyboard.
 
 So far, I followed in code the first way only.
 
-However, the keyboard does not go down again, like in the video.
+However, the keyboard does not go down, like in the video.
 In project QRCodeReader, I did add a solution for this, with Return button causing the keyboard to go down.
 Fixed by adding ```inputTextField.resignFirstResponder()```call in handleSend.
 
 ### Ep 16 - How to Observe Chat Log Per User
+
+Restructured "user-messages"
+
+user-messages
+|--fromId
+|  |--toId
+|  |  |--msgId
+|  |  |--msgId
+|  |  |--msgId...
+|  |--toId...
+|--fromId...
+
+LoginController: added code to textInputFields to close the keyboard on Done (Return) key tap.
