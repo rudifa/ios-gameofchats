@@ -127,8 +127,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         } else {
             cell.bubbleView.backgroundColor = ChatMessageCell.lightGray
             cell.textView.textColor = UIColor.black
-            cell.bubbleLeftAnchor?.isActive = true
             cell.bubbleRightAnchor?.isActive = false
+            cell.bubbleLeftAnchor?.isActive = true
             cell.profileImageView.isHidden = false
       }
     }
