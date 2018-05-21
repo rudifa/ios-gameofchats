@@ -341,3 +341,13 @@ Adds the modifiers to bubbleView, to distinguish to/from bubbles in position, co
 Adds a hack to keep the number of tableView.reloadData in MessageView to a minimum.
 
 ### Ep 15 - How to Implement Interactive Keyboard
+
+Shows two ways to implement moving the input field up with the keyboard.
+
+So far, I followed in code the first way only.
+
+However, the keyboard does not go down again, like in the video.
+In project QRCodeReader, I did add a solution for this, with Return button causing the keyboard to go down.
+Fixed by adding ```inputTextField.resignFirstResponder()```call in handleSend.
+
+### Ep 16 - How to Observe Chat Log Per User
