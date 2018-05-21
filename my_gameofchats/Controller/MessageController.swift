@@ -19,7 +19,6 @@ class MessageController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Not using the storyboard - create the accessories.
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
@@ -27,41 +26,44 @@ class MessageController: UITableViewController {
         checkIfUserIsLoggedIn()
 
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
-
-//        observeMessages()
-
     }
 
     func observeUserMessages() {
-        // here we display all messages from currentUser
+        // here we observe all user-messages from or to the currentUser
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded) { (snapshot) in
             let messageId = snapshot.key
             let messageRef = Database.database().reference().child("messages").child(messageId)
             messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
                 if let dict = snapshot.value as? [String: AnyObject] {
                     let message = Message()
                     message.setValuesForKeys(dict)
-
                     if let chatPartnerId = message.chatPartnerId() {
+                        // keep one message per chat partner
                         self.messagesDictionary[chatPartnerId] = message
                         self.messages = Array(self.messagesDictionary.values)
                         self.messages.sort(by: { (message1, message2) -> Bool in
                             return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
                         })
                     }
-
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    // use the timer to prevent too frequent calls to handleReloadTable
+                    self.timer?.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                 }
            })
         }
     }
 
-    func observeMessages() {
+    var timer: Timer?
+
+    @objc func handleReloadTable() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+
+    func observeMessages_UNUSED() {
         // here we display all user messages
         let ref = Database.database().reference().child("messages")
         ref.observe(.childAdded, with: { (snapshot) in
@@ -95,7 +97,6 @@ class MessageController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         cell.message = messages[indexPath.row]
         return cell
@@ -107,12 +108,10 @@ class MessageController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let message = messages[indexPath.row]
-//        print(message.text!, message.fromId!, message.toId!)
         guard let chatPartnerId = message.chatPartnerId() else { return }
 
         let ref = Database.database().reference().child("users").child(chatPartnerId)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            print(snapshot)
             guard let dict = snapshot.value as? [String: AnyObject] else { return}
             let user = UserData()
             user.id = chatPartnerId
@@ -145,8 +144,6 @@ class MessageController: UITableViewController {
         }
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             if let dict = snapshot.value as? [String: AnyObject] {
-//                self.navigationItem.title = dict["name"] as? String
-
                 let user = UserData()
                 user.setValuesForKeys(dict)
                 self.setupNavbarWith(user: user)
@@ -166,13 +163,10 @@ class MessageController: UITableViewController {
         let titleView = UIView()
         self.navigationItem.titleView = titleView
         titleView.frame = CGRect(x:0, y:0, width: 100, height: 40)
-//        titleView.backgroundColor = UIColor.red
-
 
         let containerView = UIView()
         titleView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-//        containerView.backgroundColor = UIColor.orange
 
         // x, y constraints
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
@@ -193,10 +187,8 @@ class MessageController: UITableViewController {
         profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-
         let nameLabel = UILabel()
         containerView.addSubview(nameLabel)
-        //        nameLabel.backgroundColor = UIColor.orange
 
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -207,12 +199,8 @@ class MessageController: UITableViewController {
         nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
 
-        // the tap works and the red background is present : when coming from register or login, or from edit/cancel
-        // the tap does not work and the red background is missing : when comming from tap/back
-        // WHY?
-
-//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogControllerFor)))
         DispatchQueue.main.async {
+            // for info only
             self.navigationItem.titleView?.printSubviews()
         }
     }
