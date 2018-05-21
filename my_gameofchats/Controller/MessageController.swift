@@ -46,23 +46,27 @@ class MessageController: UITableViewController {
                         if let chatPartnerId = message.chatPartnerId() {
                             // keep one message per chat partner
                             self.messagesDictionary[chatPartnerId] = message
-                            self.messages = Array(self.messagesDictionary.values)
-                            self.messages.sort(by: { (message1, message2) -> Bool in
-                                return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
-                            })
                         }
-                        // use the timer to prevent too frequent calls to handleReloadTable
-                        self.timer?.invalidate()
-                        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
+                        self.attemptReloadOfTable()
                     }
                 })
             })
         }
     }
 
+    func attemptReloadOfTable() {
+        // use the timer to prevent too frequent calls to handleReloadTable
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
+    }
+
     var timer: Timer?
 
     @objc func handleReloadTable() {
+        self.messages = Array(self.messagesDictionary.values)
+        self.messages.sort(by: { (message1, message2) -> Bool in
+            return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
+        })
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
