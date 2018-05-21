@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, UITextFieldDelegate {
     
     var messageController: MessageController?
     
@@ -81,6 +81,7 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Name"
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.returnKeyType = .done
         return tf
     }()
     
@@ -95,6 +96,7 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Email"
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.returnKeyType = .done
         return tf
     }()
     
@@ -110,7 +112,8 @@ class LoginController: UIViewController {
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
         tf.translatesAutoresizingMaskIntoConstraints = false
-        return tf
+        tf.returnKeyType = .done
+       return tf
     }()
     
     lazy var profileImageView: UIImageView = {
@@ -245,6 +248,10 @@ class LoginController: UIViewController {
         passwordTextField.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
         passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: 1/3)
         passwordTextFieldHeightAnchor?.isActive = true
+
+        nameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     func setupLoginRegisterButton() {
@@ -266,6 +273,14 @@ class LoginController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+
 }
 
 extension UIColor {
