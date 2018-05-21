@@ -67,6 +67,16 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
 
         setupInputComponents()
+
+        setupKeyboardObservers()
+    }
+
+    func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    }
+
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
+        print(notification.userInfo as Any)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -163,12 +173,15 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
 
     @objc func handleSend() {
+        let text = inputTextField.text!
+        if text.isBlank() { return }
+
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId() // create a messageId
         let toId = user?.id
         let fromId = Auth.auth().currentUser?.uid
         let timestamp = NSNumber(value: Int(NSDate().timeIntervalSince1970))
-        let values = ["text": inputTextField.text!, "toId": toId!, "fromId": fromId!, "timestamp": timestamp] as [String : Any]
+        let values = ["text": text, "toId": toId!, "fromId": fromId!, "timestamp": timestamp] as [String : Any]
         childRef.updateChildValues(values as Any as! [AnyHashable : Any]) {
             (error, ref) in
             if error != nil {
