@@ -27,7 +27,6 @@ class MessageController: UITableViewController {
 
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
     }
-
     func observeUserMessages() {
         // here we observe all user-messages from or to the currentUser
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -36,22 +35,24 @@ class MessageController: UITableViewController {
             let userId = snapshot.key
             Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: {
                 (snapshot) in
-
-                let messageId = snapshot.key
-                let messageRef = Database.database().reference().child("messages").child(messageId)
-                messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let dict = snapshot.value as? [String: AnyObject] {
-                        let message = Message()
-                        message.setValuesForKeys(dict)
-                        if let chatPartnerId = message.chatPartnerId() {
-                            // keep one message per chat partner
-                            self.messagesDictionary[chatPartnerId] = message
-                        }
-                        self.attemptReloadOfTable()
-                    }
-                })
+                self.fetchMessageWith(messageId: snapshot.key)
             })
         }
+    }
+
+    private func fetchMessageWith(messageId: String) {
+        let messageRef = Database.database().reference().child("messages").child(messageId)
+        messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dict = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.setValuesForKeys(dict)
+                if let chatPartnerId = message.chatPartnerId() {
+                    // keep one message per chat partner
+                    self.messagesDictionary[chatPartnerId] = message
+                }
+                self.attemptReloadOfTable()
+            }
+        })
     }
 
     func attemptReloadOfTable() {
